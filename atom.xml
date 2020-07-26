@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://flammingRaven.github.io</id>
     <title>FlammingRaven</title>
-    <updated>2020-07-26T09:13:31.074Z</updated>
+    <updated>2020-07-26T09:20:33.671Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://flammingRaven.github.io"/>
     <link rel="self" href="https://flammingRaven.github.io/atom.xml"/>
@@ -10,6 +10,409 @@
     <logo>https://flammingRaven.github.io/images/avatar.png</logo>
     <icon>https://flammingRaven.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, FlammingRaven</rights>
+    <entry>
+        <title type="html"><![CDATA[Carla Autoware及Carla ROS安装过程]]></title>
+        <id>https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/</id>
+        <link href="https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/">
+        </link>
+        <updated>2020-07-26T09:19:54.000Z</updated>
+        <content type="html"><![CDATA[<p><ul class="markdownIt-TOC">
+<li><a href="#1-%E5%AE%89%E8%A3%85carla-autoware-bridge">1. 安装Carla-Autoware-Bridge</a>
+<ul>
+<li><a href="#%E9%A2%84%E5%85%88%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6">预先安装的软件</a></li>
+<li><a href="#carla-autoware-bridge%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B">Carla-Autoware-Bridge安装过程</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8Ccarla-autoware-bridge">运行Carla-Autoware-Bridge</a></li>
+</ul>
+</li>
+<li><a href="#2-%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85ros-bridge">2. 源码安装ROS-Bridge</a>
+<ul>
+<li><a href="#%E9%A2%84%E5%85%88%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6-2">预先安装的软件</a></li>
+<li><a href="#ros-bridge%E7%9A%84%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B">ROS-Bridge的源码安装过程</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B">运行过程</a></li>
+</ul>
+</li>
+</ul>
+<br>
+本文总结了CARLA与autoware和ROS的联合仿真的安装过程和一些问题。主要参考了以下链接：</p>
+<ol>
+<li>Autoware-Carla Bridge的官方链接为：<a href="https://github.com/carla-simulator/carla-autoware">https://github.com/carla-simulator/carla-autoware</a></li>
+<li>Carla-ROS Bridge的官方链接为：<a href="https://github.com/carla-simulator/ros-bridge">https://github.com/carla-simulator/ros-bridge</a>和<a href="https://carla.readthedocs.io/en/latest/ros_installation/">https://carla.readthedocs.io/en/latest/ros_installation/</a></li>
+</ol>
+<h1 id="1-安装carla-autoware-bridge">1. 安装Carla-Autoware-Bridge</h1>
+<h2 id="预先安装的软件">预先安装的软件</h2>
+<ol>
+<li><strong>Carla 0.9.7</strong>（官方链接用的是0.9.6版本）<br>
+<strong>第一个疑问解决</strong>:官方的ROS-bridge其实是不支持0.9.6及以下的CARLA版本的，我安装之后看了下autoware-carla里面ros-bridge的<code>readme.md</code>文件，发现这里用的ROS-bridge其实是支持CARLA 0.9.4版本及其以上，所以<strong>autoware-carla已经包含了ros-bridge, 也就是不需要额外再安装ROS-bridge了。</strong></li>
+<li><strong>Autoware 1.12.0</strong> （安装详情可以见我的<a href="https://blog.csdn.net/qq_41871826/article/details/105276880">这篇博客</a>）</li>
+</ol>
+<h2 id="carla-autoware-bridge安装过程">Carla-Autoware-Bridge安装过程</h2>
+<p>其实Carla-Autoware-Bridge本质上算是一个ROS Package，整个包的大小大约在<code>1.6GB</code>左右。其安装过程按照官方链接中的指令做基本就可以。<strong>但是遇到的问题就是下载太慢，git clone中有子文件夹。</strong></p>
+<ol>
+<li>Ubuntu下安装<code>git lfs</code>（直接跟着<a href="https://github.com/git-lfs/git-lfs/wiki/Installation">官方链接</a>走就可以）</li>
+</ol>
+<pre><code class="language-powershell">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+git lfs install
+</code></pre>
+<ol start="2">
+<li>下载Carla-Autoware-Bridge文件包</li>
+</ol>
+<pre><code class="language-powershell">cd ~
+git lfs clone https://github.com/carla-simulator/carla-autoware.git
+cd carla-autoware
+git submodule update --init
+</code></pre>
+<p><strong>疑问解决：</strong><br>
+<strong>这一步需要花费很多时间，请保持耐心</strong>。这里要用<code>git submodule update --init</code>是因为当用<code>git clone 网址</code>下载时，文件包中的子文件夹不会被下载。<code>git submodule update --init</code>的作用就是自动下载子文件夹。（后续ROS-Bridge也有相同的问题）</p>
+<p><strong>创建catkin工作空间、安装相关依赖并编译</strong></p>
+<pre><code class="language-powershell">#初始化工作空间
+cd catkin_ws
+source ~/autoware.ai/install/setup.bash
+catkin_init_workspace src/
+
+#安装依赖
+rosdep update
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+
+#编译工作空间
+catkin_make
+</code></pre>
+<p>其中<code>source ~/autoware.ai/install/setup.bash</code>的作用和在autoware的运行中一样，都是把autoware中的子节点加入到环境变量中。后续的<code>catkin_init_workspace src/</code>是常规的ROS中初始化工作空间的指令。</p>
+<p>如果<strong>rosdep update出现网络连接问题</strong>，可以参考我的<a href="https://blog.csdn.net/qq_41871826/article/details/105187570">这篇博客</a></p>
+<h2 id="运行carla-autoware-bridge">运行Carla-Autoware-Bridge</h2>
+<ol>
+<li>启动Carla服务器</li>
+</ol>
+<pre><code class="language-powershell">cd &lt;path-to-Carla_0.9.7.4&gt;
+./CarlaUE4.sh -opengl
+</code></pre>
+<p>（最好把这些指令存到<code>~</code>目录下的shell脚本中，方便启动）<br>
+2. 启动Carla-Autoware-Bridge</p>
+<pre><code class="language-powershell">export CARLA_AUTOWARE_ROOT=~/carla-autoware/autoware_launch
+export CARLA_MAPS_PATH=~/carla-autoware/autoware_data/maps
+source $CARLA_AUTOWARE_ROOT/../catkin_ws/devel/setup.bash
+export PYTHONPATH=$PYTHONPATH:~/CARLA_0.9.7.4/PythonAPI/carla/dist/carla-0.9.7-py2.7-linux-x86_64.egg
+roslaunch $CARLA_AUTOWARE_ROOT/devel.launch
+</code></pre>
+<p>这里的<code>export CARLA_MAPS_PATH=~/carla-autoware/autoware_data/maps</code>的作用是把相关的pcd点云文件加入到环境变量中，不添加的会可能rivz中不显示激光雷达地图。如果不添加<code>carla-0.9.7-py2.7-linux-x86_64.egg</code>到环境变量中会出现导入carla库失败<strong>ImportError: no module named CARLA</strong>的情况。</p>
+<p>以下代码用来检查carla环境变量是否配置成功：</p>
+<pre><code class="language-powershell">python -c 'import carla;print(&quot;Success&quot;)'
+</code></pre>
+<p>输入以上指令之后会出现一个pygame的窗口显示运行结果，等上一段时间车辆会开始缓慢行驶。也可以手动控制车辆，<mark><strong>按下B键即可切换。</strong></mark><strong>（如果车辆没有自动行驶，说明<code>devel.launch</code>启动中出现错误，建议根据终端显示的报错信息进行调试。）</strong></p>
+<p>这里<strong>我遇到的坑</strong>是<strong>缺少几个python模块</strong>：分别是<code>networkx</code>和<code>simple_pid</code></p>
+<p>出现的报错如下：</p>
+<pre><code class="language-cpp">  File &quot;/home/guo/carla-autoware/catkin_ws/src/ros-bridge/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py&quot;, line 30, in &lt;module&gt;
+    from agents.navigation.global_route_planner import GlobalRoutePlanner
+  File &quot;/home/guo/CARLA_0.9.7.4/PythonAPI/carla/agents/navigation/global_route_planner.py&quot;, line 11, in &lt;module&gt;
+    import networkx as nx
+ImportError: No module named networkx
+[carla_waypoint_publisher-7] process has died [pid 11565, exit code 1, cmd /home/guo/carla-autoware/catkin_ws/src/ros-bridge/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py __name:=carla_waypoint_publisher __log:=/home/guo/.ros/log/3f7c326a-a0b1-11ea-abbb-e0d55ea64ade/carla_waypoint_publisher-7.log].
+log file: /home/guo/.ros/log/3f7c326a-a0b1-11ea-abbb-e0d55ea64ade/carla_waypoint_publisher-7*.log
+</code></pre>
+<p>用以下指令安装确实的包：</p>
+<pre><code class="language-powershell">pip install networkx
+pip install simple_pid
+</code></pre>
+<p>安装simple_pid后建议检测一下终端是否会出现警告，如下</p>
+<pre><code class="language-powershell">python
+from simple_pid import PID
+</code></pre>
+<p>出现以下情况<code>&lt;path-to-user&gt;/.local/lib/python2.7/site-packages/simple_pid/PID.py:22UserWarning: time.monotonic() not available in python &lt; 3.3, using time.time() as fallback warnings.warn('time.monotonic() not available in python &lt; 3.3, using time.time() as fallback')</code>之后打开目录对应的文件，将<code>time.monotonic</code>改为<code>time.time</code>即可</p>
+<ol start="3">
+<li>启动Rviz<br>
+ROS中的RVIZ能够帮助可视化carla城市中的激光点图。<strong>（这里不需要用autoware中的rviz）</strong></li>
+</ol>
+<pre><code class="language-powershell">rosrun rviz rviz
+</code></pre>
+<p>当然，也可以通过autoware的<code>runtime manager</code>打开rviz显示。</p>
+<p>启动之后效果图如下：（Carla-Autoware-Bridge中已经包含各个城市的激光点云数据）<br>
+<img src="https://img-blog.csdnimg.cn/20200520230541429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200521150955775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+动图如下：<br>
+<img src="https://img-blog.csdnimg.cn/20200528161324687.gif" alt="在这里插入图片描述" loading="lazy"></p>
+<h1 id="2-源码安装ros-bridge">2. 源码安装ROS-Bridge</h1>
+<p><strong>踩坑</strong>：第一次安装尝试了apt安装Carla-ROS-Bridge，运行时报错。为节省时间，我直接按照官网要求进行源码安装（开发者），我觉得apt安装和源码安装bridge出现报错的原因是一样的，因为用源码安装，在<code>git clone</code>过程中文件夹<code>ros-bridge</code>中的<code>carla_msgs</code>为空，对应ros-bridge的<a href="https://github.com/carla-simulator/ros-bridge">github网址</a>中高亮的文件：<br>
+<img src="https://img-blog.csdnimg.cn/20200515220540326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy">下载的工程带有submodule，可以用<code>git submodule update --init</code>进行子文件夹下载。（我是直接从github下载的，没有用该指令，不能保证其有效性。）</p>
+<h2 id="预先安装的软件-2">预先安装的软件</h2>
+<ol>
+<li>ROS Kinetic</li>
+<li>Carla 0.9.7.4</li>
+</ol>
+<h2 id="ros-bridge的源码安装过程">ROS-Bridge的源码安装过程</h2>
+<p>这里的源码安装过程就直接搬运官网指令了，基本不会出现什么问题。</p>
+<pre><code class="language-powershell">mkdir -p ~/carla-ros-bridge/catkin_ws/src
+cd ~/carla-ros-bridge
+git clone https://github.com/carla-simulator/ros-bridge.git
+cd catkin_ws/src
+ln -s ../../ros-bridge
+source /opt/ros/kinetic/setup.bash #Watch out, this sets ROS Kinetic. 
+cd ..
+
+#install required ros-dependencies
+rosdep update
+rosdep install --from-paths src --ignore-src -r
+
+#build
+catkin_make
+</code></pre>
+<h2 id="运行过程">运行过程</h2>
+<ol>
+<li>配置相关环境变量（最好只对当前终端使用）</li>
+</ol>
+<pre><code class="language-powershell">source ~/carla-ros-bridge/catkin_ws/devel/setup.bash
+</code></pre>
+<ol start="2">
+<li>启动carla 0.9.7.4</li>
+</ol>
+<pre><code class="language-powershell">**# Option 1: start the ros bridge
+roslaunch carla_ros_bridge carla_ros_bridge.launch
+
+# Option 2: start the ros bridge together with RVIZ
+roslaunch carla_ros_bridge carla_ros_bridge_with_rviz.launch
+
+# Option 3: start the ros bridge together with an example ego vehicle
+roslaunch carla_ros_bridge carla_ros_bridge_with_example_ego_vehicle.launch**
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Autoware 1.12.0 源码安装总结]]></title>
+        <id>https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/</id>
+        <link href="https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/">
+        </link>
+        <updated>2020-07-26T09:19:18.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="autoware-1120-源码安装总结">Autoware 1.12.0 源码安装总结</h1>
+<p>终于是跑通了autoware的demo，<strong>源码安装</strong>的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去<a href="https://gitlab.com/autowarefoundation/autoware.ai/autoware/-/wikis/Source-Build">官网</a>一步步安装，能少走很多弯路。<br>
+(autoware的整个资源已经迁移到gitlab了，之前github主页也会提醒转到gitlab网站)</p>
+<h2 id="一-配置及需要预先安装的软件">一、配置及需要预先安装的软件</h2>
+<p>autoware需要提前安装的东西挺多的，最好<strong>确保这些都安装正确</strong>再继续。</p>
+<ol>
+<li><strong>Ubuntu 16.04 LTS</strong>，安装过程可参考我的这篇博客：<a href="https://blog.csdn.net/qq_41871826/article/details/104702737">Ubuntu 16.04安装过程中的一些总结</a><br>
+<strong>注意第一个坑！</strong> 安装完ubuntu系统之后最好不要去安装anaconda，因为装完anaconda会把原始Ubuntu自带的python 2.7替换为Python3（ROS很多包都会用到python 2.7）我第一次试着装autoware的时候就装了anaconda，重新创建了一个python 2.7的conda环境之后在跑autoware demo的时候出现了打不开autoware的运行时系统的问题，所以为了节省精力，还是不要装anaconda的好。</li>
+<li><strong>ROS kinetic</strong>，安装过程可以参考我的这篇博客：<a href="https://blog.csdn.net/qq_41871826/article/details/105187570">ubuntu 16.04 ROS Kinetic安装</a><br>
+安装ROS相对容易许多，除了这篇文章中提到的换国内源之后出现的<strong>GPG ERROR</strong>问题，整体安装下来比较顺利。<br>
+(<strong>ROS Kinetic本身就自带了OpenCV</strong> 3.3.1，也可以装完ROS之后可以用<code>import cv2</code>和<code>cv2.__version__</code>查看版本)</li>
+<li><strong>QT 5.2.1及以上</strong>，这里我装的是<a href="https://www.qt.io/offline-installers">QT 5.9.9</a>（去官网下载即可），至于QT-ROS的插件安装过程我后续加到这来</li>
+<li><strong>CUDA 9.0</strong>，autoware要求CUDA的版本是9.0，所以还是严格按照官网要求来做，我怕出现问题就没装其他版本。装CUDA前先看看显卡驱动是不是和你的内核要求的驱动版本一致，不一致会出现：Failed to initialize NVML: Driver/library version mismatch，下文有解决该问题的博客链接。<br>
+参考链接：
+<ul>
+<li><a href="https://developer.nvidia.com/cuda-90-download-archive">CUDA下载地址</a></li>
+<li><a href="https://www.jianshu.com/p/6b0e2c617591">CUDA 9.0下载与安装</a><br>
+（这一步中修改环境变量之后一定要用<code>source ~/.bashrc</code>更新，最后用<code>nvcc -V</code>检查cuda版本）</li>
+<li><a href="https://blog.csdn.net/qq_40200387/article/details/90341107">解决Failed to initialize NVML: Driver/library version mismatch</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="2-autoware安装">2. Autoware安装</h2>
+<p>确保以上的软件都正确安装之后就可以按照官网的步骤安装了。我这里就直接拷贝指令过来吧，省得如果要再装的话去官网找了。<br>
+<strong>I. 安装相关依赖</strong></p>
+<pre><code class="language-powershell">sudo apt-get update 
+sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin gksu
+sudo apt-get install -y python3-pip python3-colcon-common-extensions python3-setuptools python3-vcstool
+pip3 install -U setuptools
+
+</code></pre>
+<p><strong>II. Build</strong></p>
+<p>创建工作空间</p>
+<pre><code class="language-powershell">mkdir -p autoware.ai/src
+cd autoware.ai
+</code></pre>
+<p>下载autoware.ai到工作空间</p>
+<pre><code class="language-powershell">wget -O autoware.ai.repos &quot;https://gitlab.com/autowarefoundation/autoware.ai/autoware/raw/1.12.0/autoware.ai.repos?inline=false&quot;
+vcs import src &lt; autoware.ai.repos
+</code></pre>
+<p>用rosdep安装依赖</p>
+<pre><code class="language-powershell">rosdep update
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+</code></pre>
+<p>编译工作空间（这里是with CUDA support）</p>
+<pre><code class="language-powershell">AUTOWARE_COMPILE_WITH_CUDA=1 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+</code></pre>
+<p><strong>踩坑：动态库链接libEGL.so损坏</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200515221536665.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+为了解决上述问题，我参考了<a href="https://blog.csdn.net/fb_941219/article/details/83549720">这篇博客</a>，根据报错情况，这里损坏的链接是<code>libEGL.so</code>。先看该文件是否存在，我是有这个文件的，但是打开文件的<code>properties</code>之后会发现链接已损坏，如下：<br>
+<img src="https://img-blog.csdnimg.cn/20200515221927669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>所以先删除该文件，再重新添加链接。</strong></p>
+<pre><code class="language-powershell">sudo rm /usr/lib/x86_64-linux-gnu/libEGL.so
+sudo ln /usr/lib/x86_64-linux-gnu/libEGL.so.1   /usr/lib/x86_64-linux-gnu/libEGL.so
+
+</code></pre>
+<p>出现下图就说明安装好了，有的包出现警告应该不影响。还有一点就是DNN相关的包不会自动安装。<br>
+<img src="https://img-blog.csdnimg.cn/20200402201703724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="3-运行autoware-rosbag-demo">3. 运行Autoware ROSBAG Demo</h2>
+<p>运行demo之前需要按照官网的要求下载两个数据包。建议直接从谷歌云盘下载。并且注意一下两个数据包的大小，<code>sample_moriyama_data.tar.gz</code>大小约为133MB，<code>sample_moriyama_150324.tar.gz</code>比较大，有3GB左右。<br>
+<a href="https://gitlab.com/autowarefoundation/autoware.ai/autoware/-/wikis/ROSBAG-Demo">官方demo网址</a></p>
+<p>下载之后过程就比较简单了，搬运的指令如下：</p>
+<p>第一步，解压文件</p>
+<pre><code class="language-powershell">cd ~
+mkdir .autoware
+cd .autoware
+cp ~/Downloads/sample_moriyama_* .
+tar zxfv sample_moriyama_150324.tar.gz
+tar zxfv sample_moriyama_data.tar.gz
+</code></pre>
+<p>（这里面要严格按照官网要求创建<code>.autoware</code>文件夹，我在CSDN上看到了有的博主提到了这个问题，<a href="https://blog.csdn.net/yourgreatfather/article/details/86504547">文章参考</a>）<br>
+第二步，运行</p>
+<pre><code class="language-powershell">cd autoware.ai
+source install/setup.bash
+roslaunch runtime_manager runtime_manager.launch
+</code></pre>
+<p>（这里会打开两个窗口）</p>
+<p>第三步，设置simulation的<code>.bag</code>文件，play之后直接pause<br>
+第四步，打开Rviz，设置配置文件（<code>File--&gt;Open Config</code>）<code>autoware.ai/src/autoware/documentation/autoware_quickstart_examples/launch/rosbag_demo/default.rviz</code></p>
+<p>第五步，打开quick start界面，添加相关例子的路径：<code>autoware.ai/src/autoware/documentation/autoware_quickstart_examples/launch/rosbag_demo/.</code><br>
+第六步，开始运行simulation：<br>
+<img src="https://img-blog.csdnimg.cn/20200402203502869.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[强化学习笔记（1）——一些基本概念]]></title>
+        <id>https://flammingRaven.github.io/post/qiang-hua-xue-xi-bi-ji-1-yi-xie-ji-ben-gai-nian/</id>
+        <link href="https://flammingRaven.github.io/post/qiang-hua-xue-xi-bi-ji-1-yi-xie-ji-ben-gai-nian/">
+        </link>
+        <updated>2020-07-26T09:17:16.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="本文目的">本文目的</h1>
+<p>本文是个人对David Silver老师的强化学习课程的总结，主要目的还是为了理清强化学习的一些概念及方法，也可以参考其他大佬写的关于该课程的<a href="https://zhuanlan.zhihu.com/reinforce">笔记</a>。</p>
+<blockquote>
+<p>Reinforcement learning, like many topics whose names end with “ing,” such as machine<br>
+learning and mountaineering, is simultaneously a problem, a class of solution methods<br>
+that work well on the problem, and the field that studies this problem and its solution<br>
+methods.</p>
+</blockquote>
+<p>以上段落引自Richard S. Sutton的《Reinforcement Learning: An Introduction》。本文针对什么是强化学习问题、强化学习方法有哪些这两个问题对第一节课的课程内容进行整理。</p>
+<h1 id="1-使用强化学习方法的直观示例">1. 使用强化学习方法的直观示例</h1>
+<ul>
+<li>直升机/无人机特技飞行Fly Stunt</li>
+<li>围棋比赛</li>
+<li>管理投资Manage Investment Portfolio</li>
+<li>人型机器人行走</li>
+</ul>
+<h1 id="2-强化学习问题是什么">2. 强化学习问题是什么？</h1>
+<p>（这里做一个小小的更新）</p>
+<p>这里我按照我自己的理解给出一个比较<strong>直观的描述</strong>：<strong>强化学习问题就是让智能体在与环境的交互过程中不断学习一个序列化的动作</strong>（“交互”一词是比较宽泛的，我认为交互应该是智能体获得并利用环境的信息），<strong>最终学到一个能够最大化智能体的长期收益的动作序列</strong>。（至于强化学习的方法就是用什么样的方法去解决以上问题）</p>
+<p>我觉得也可以把“强化学习”分成两个词来理解，第一个是Reinforcement，到底reinforce了什么？我目前理解的就是最大化长期收益（也就是后文的基本假设），第二个词是Learning，具体应该是who learns what，这个“who”我觉得就是智能体，&quot;what”就是动作序列。</p>
+<h2 id="21-强化学习问题的基本特点">2.1 强化学习问题的基本特点</h2>
+<ul>
+<li>与其他机器学习方法（监督和无监督学习）不一样的是，强化学习问题中不存在监督学习那样的supervisor，又不像无监督学习完全没有supervisor。强化学习<strong>基于收益信号（Reward）</strong>，并且该信号是<strong>时延</strong>的。</li>
+<li>时间对于强化学习问题非常重要，这说明了强化学习问题与序列化决策过程有关，即智能体（Agent）每一时刻的动作选取都会影响下一时刻所接收的信息（即reward）。解决强化学习问题所得到的最终结果就是<strong>一系列动作</strong>（A Sequence of Actions）。</li>
+</ul>
+<h2 id="22-强化学习问题的基本假设">2.2 强化学习问题的基本假设</h2>
+<p>强化学习的<strong>基本假设</strong>：学习目标为最大化累计收益（maximization of cumulative reward）</p>
+<h2 id="23-强化学习问题中的一些元素">2.3 强化学习问题中的一些元素</h2>
+<h3 id="收益rewards">收益（Rewards）</h3>
+<p>收益是一个标量反馈信号，直观可以理解成衡量智能体在某个步骤中的表现好坏，用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">R_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示。</p>
+<p>具体的例子：直升机飞行特技中，如果直升机偏离预设轨迹，收益为负；围棋比赛中，赢得比赛收益为正；管理投资中，赚钱则收益为正。</p>
+<h3 id="序列化决策sequential-decision-making">序列化决策（Sequential Decision Making）</h3>
+<p>序列化动作中每一个动作会带来长期“影响”，即对收益的影响。所选取的序列化动作有的时候需要牺牲短期收益，获得长期收益。</p>
+<p>具体的例子：在直升机飞行特技过程中，直升机可能出现没有燃料的情况，这时候尽管进行下一个飞行动作可能会带来很高的收益，但是很有可能下一个动作结束之后直升机由于没油了直接坠毁，这样就得不偿失。</p>
+<h3 id="智能体和环境">智能体和环境</h3>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200718220631579.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<ol>
+<li>智能体<br>
+每一个时间t，智能体会做出以下“行为”：执行动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>， 获得对环境的观测值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>O</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">O_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，获取收益<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">R_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</li>
+<li>环境<br>
+a. 每一个时间t，环境会做出以下“行为”：接收智能体的动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>， 发出智能体下一时刻将会观测到的值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>O</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">O_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>，发出收益<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">R_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>。（这里假设智能体做出动作和收到环境发出的收益对应不同的时刻）<br>
+b. 环境的分类: I. <strong>完全可观测环境</strong>（Fully Observable）中智能体直接观测环境状态，并且满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>O</mi><mi>t</mi></msub><mo>=</mo><msubsup><mi>S</mi><mi>t</mi><mi>a</mi></msubsup><mo>=</mo><msubsup><mi>S</mi><mi>t</mi><mi>e</mi></msubsup></mrow><annotation encoding="application/x-tex">O_t=S_t^a=S_t^e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.93033em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.93033em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span>，即智能体状态与环境状态相等（后文有详细解释），建模为Markov Decision Process (MDP) II. <strong>部分可观测环境</strong>（Partially Observable）中智能体间接观测环境状态，agent state不等于environment state, 智能体需要构造自己的状态描述，建模为POMDP（Partially Observable Markov Decision Process）</li>
+</ol>
+<h3 id="历史history和状态state">历史（History）和状态（State）</h3>
+<p><strong>历史：</strong><br>
+历史是到当前时间为止，<strong>智能体所有的动作、观测、收益的序列</strong>，数学表示为：$$H_t=A_1,O_1,R_1,...,A_{t-1},O_{t-1},R_{t-1},O_t,R_t$$<br>
+引入历史的意义在于智能体对于动作的选择和环境对于发出观测值/收益的选择均取决于历史。<br>
+<strong>状态：</strong><br>
+状态的直观含义是对历史的一个“总结”（summary），数学上的精确定义是：状态是历史的一个函数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mi>t</mi></msub><mo>=</mo><mi>f</mi><mo>(</mo><msub><mi>H</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">S_t=f(H_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.08125em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<ol>
+<li>环境状态<br>
+环境状态的表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>S</mi><mi>t</mi><mi>e</mi></msubsup></mrow><annotation encoding="application/x-tex">S_t^e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93033em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span>，其含义是环境的私有表示 (private representation)，环境在其状态信息的基础上选择所发出的收益信号或观测信号；一般来说，智能体对这些环境状态不可知；并且环境状态信息中一般也会包含不相关信息。</li>
+<li>智能体状态<br>
+智能体状态的表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>S</mi><mi>t</mi><mi>a</mi></msubsup></mrow><annotation encoding="application/x-tex">S_t^a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93033em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span>，它是智能体的一个内部表示（internal representation)，智能体在此基础上选择下一个动作；智能体状态是历史的一个函数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>S</mi><mi>t</mi><mi>a</mi></msubsup><mo>=</mo><mi>f</mi><mo>(</mo><msub><mi>H</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">S_t^a=f(H_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93033em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.08125em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>（<strong>所以前文中的状态指的是智能体状态</strong>）</li>
+<li>信息状态（Information State）<br>
+又称为Markov state，包含历史中有用的信息；信息状态满足Markov property:<br>
+<img src="https://img-blog.csdnimg.cn/20200718214036109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+马尔可夫性可以理解为：未来与过去无关，只与现在有关；也就是说一旦当前状态已知，智能体就放弃历史信息。（环境状态和历史均满足马尔可夫性）</li>
+</ol>
+<h2 id="24-强化学习问题中存在的trade-off">2.4 强化学习问题中存在的Trade-off</h2>
+<h3 id="探索和利用exploration-vs-exploitation">探索和利用（Exploration V.S. Exploitation）</h3>
+<ol>
+<li>Exploration<br>
+exploration是发现更多关于环境的信息，一种极端情况是在探索中智能体收到的收益越来越低。</li>
+<li>Exploitation<br>
+exploitation则是利用已知的环境信息最大化智能体的收益</li>
+<li>一个非常直观的例子<br>
+在选择餐馆吃饭这个情境下，如果我们每次只去自己非常熟悉的店，因为我们能保证这家餐馆肯定比较符合我们的胃口，因此收益不差，这就是exploitation。如果我们想换个口味，选择跟朋友找一些新的餐馆，这时就是exploration。发现新美食的过程中我们很可能遇到不合自己口味的或者是店员服务很差的情况，这样我们的收益就降低了；但也有可能遇到了更适合自己的口味的餐馆，这时收益猛涨。</li>
+</ol>
+<h2 id="25-序列决策过程中的两大类问题">2.5 序列决策过程中的两大类问题</h2>
+<h3 id="规划问题">规划问题</h3>
+<ul>
+<li>环境模型<strong>已知</strong></li>
+<li>智能体用已知的环境模型做<strong>计算</strong>（并不存在于环境的交互）</li>
+<li>智能体在计算之后改进策略</li>
+<li><strong>例如</strong>：在王者荣耀中，“玩家”了解所有的游戏规则，那么规划问题转化为一个查询问题，方法有树搜索的方法。（显然并不现实）</li>
+</ul>
+<h3 id="核心的强化学习问题">核心的强化学习问题</h3>
+<ul>
+<li>环境模型<strong>未知</strong></li>
+<li>智能体与环境<strong>交互</strong></li>
+<li>智能体在与环境交互之后改进策略</li>
+<li><strong>例如</strong>，在王者荣耀中，“玩家”并不了解所有的游戏规则，那么要想玩好只能边玩边了解。</li>
+</ul>
+<h1 id="3-强化学习方法有哪些">3. 强化学习方法有哪些？</h1>
+<h2 id="31-agent所含的三种元素">3.1 Agent所含的三种元素</h2>
+<h3 id="策略policy">策略（Policy）</h3>
+<p>策略也就是智能体的行为agent's behaviour。<strong>策略的准确定义是状态到动作的映射</strong>。一般有两种：（这里实在翻译水平有限，见谅）</p>
+<ol>
+<li>Deterministic Policy（确定性策略）</li>
+</ol>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>π</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a = \pi(s)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mclose">)</span></span></span></span></span></p>
+<ol start="2">
+<li>Stochastic Policy（随机性策略）</li>
+</ol>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi><mo>(</mo><mi>a</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><msub><mi>A</mi><mi>t</mi></msub><mo>=</mo><mi>a</mi><mi mathvariant="normal">∣</mi><msub><mi>S</mi><mi>t</mi></msub><mo>=</mo><mi>s</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\pi(a|s)=P(A_t=a|S_t=s)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord">∣</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mclose">)</span></span></span></span></span></p>
+<h3 id="值函数value-function">值函数（Value Function）</h3>
+<p>值函数是对未来收益的预测，用于评估状态的好坏。<strong>公式</strong>如下：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>π</mi></msub><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><msub><mi>E</mi><mi>π</mi></msub><mo>[</mo><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>+</mo><mi>γ</mi><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>2</mn></mrow></msub><mo>+</mo><msup><mi>γ</mi><mn>2</mn></msup><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>3</mn></mrow></msub><mo>+</mo><mo>…</mo><mi mathvariant="normal">∣</mi><msub><mi>S</mi><mi>t</mi></msub><mo>=</mo><mi>s</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">v_{\pi}(s)=E_{\pi}[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3} + \dots|S_t=s]
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.072439em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">3</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mclose">]</span></span></span></span></span></p>
+<h3 id="模型model">模型（Model）</h3>
+<p>模型是智能体对于环境的表示，用于预测环境下一步会做什么。</p>
+<p>模型一般由状态转移概率和收益组成：</p>
+<ol>
+<li>状态转移概率</li>
+</ol>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="bold">P</mi><mrow><mi>S</mi><msup><mi>S</mi><mo mathvariant="normal">′</mo></msup></mrow><mi>a</mi></msubsup><mo>=</mo><mi>P</mi><mo>(</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msup><mi>s</mi><mo mathvariant="normal">′</mo></msup><mi mathvariant="normal">∣</mi><msub><mi>S</mi><mi>t</mi></msub><mo>=</mo><mi>s</mi><mo separator="true">,</mo><msub><mi>A</mi><mi>t</mi></msub><mo>=</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\bold P_{SS&#x27;}^a=P(S_{t+1}=s&#x27;|S_t=s, A_t=a)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9613919999999999em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathbf">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6828285714285715em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.051892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mclose">)</span></span></span></span></span></p>
+<ol start="2">
+<li>收益</li>
+</ol>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="bold">R</mi><mi>S</mi><mi>a</mi></msubsup><mo>=</mo><mi>E</mi><mo>(</mo><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msup><mi>s</mi><mo mathvariant="normal">′</mo></msup><mi mathvariant="normal">∣</mi><msub><mi>S</mi><mi>t</mi></msub><mo>=</mo><mi>s</mi><mo separator="true">,</mo><msub><mi>A</mi><mi>t</mi></msub><mo>=</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\bold R_{S}^a=E(R_{t+1}=s&#x27;|S_t=s, A_t=a)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9613919999999999em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathbf">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.051892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mclose">)</span></span></span></span></span></p>
+<p>(这里收益的定义与期望有关，这是因为给定当前状态和动作的情况下，下一个状态是随机的，所以求均值)</p>
+<h2 id="32-强化学习方法的两种分类">3.2 强化学习方法的两种分类</h2>
+<h3 id="根据策略和值函数的有无分类">根据策略和值函数的有无分类</h3>
+<ol>
+<li>Value Based（有值函数，不含策略，有模型）</li>
+<li>Policy Based（没有值函数，含策略，有模型）</li>
+<li>Actor-Critic（有值函数，含策略，有模型）</li>
+</ol>
+<h3 id="根据有无模型分类">根据有无模型分类</h3>
+<ol>
+<li>model free（有策略和值函数，没有模型）</li>
+<li>model based（有策略和值函数，有模型）</li>
+</ol>
+<p>分类示意图:<br>
+<img src="https://img-blog.csdnimg.cn/20200718220708426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="33-强化学习方法的大致过程">3.3 强化学习方法的大致过程</h2>
+<p>（这里按照自己的理解整理的，可能跟原课程老师的意思不太一样，望指正）</p>
+<ol>
+<li><strong>预测</strong><br>
+给定一个策略，对未来进行评估，从而判断智能体的状态是好是坏</li>
+<li><strong>控制</strong><br>
+在预测的基础上，对未来的累计收益（值函数）进行优化，即找到一个最好的策略</li>
+</ol>
+<h1 id="课程视频网址">课程视频网址：</h1>
+<p><a href="https://www.bilibili.com/video/BV1kb411i7KG">https://www.bilibili.com/video/BV1kb411i7KG</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《浪潮之巅》内容整理]]></title>
         <id>https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/</id>

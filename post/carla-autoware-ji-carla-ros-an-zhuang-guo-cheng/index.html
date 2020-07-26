@@ -4,12 +4,22 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节..." />
+<meta name="description" content="
+1. 安装Carla-Autoware-Bridge
+
+预先安装的软件
+Carla-Autoware-Bridge安装过程
+运行Carla-Autoware-Bridge
+
+
+2. 源码安装ROS-Bridge
+
+预先安装的软件
+ROS-..." />
 <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
 <link rel="preconnect dns-prefetch" href="https://cdn.jsdelivr.net/" crossorigin>
 <script async src="https://cdn.ampproject.org/v0.js"></script>
-<title>《浪潮之巅》内容整理 | FlammingRaven</title>
+<title>Carla Autoware及Carla ROS安装过程 | FlammingRaven</title>
 
 
   
@@ -2202,34 +2212,64 @@
 
 <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
 <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-<link rel="canonical" href="https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/" />
+<link rel="canonical" href="https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/" />
 <link rel="shortcut icon" href="https://flammingRaven.github.io/favicon.ico?v=1595755223676">
 
 <meta name="author" content="Raven">
 
-<meta itemprop="name" content="《浪潮之巅》内容整理 | FlammingRaven">
-<meta itemprop="description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节...">
+<meta itemprop="name" content="Carla Autoware及Carla ROS安装过程 | FlammingRaven">
+<meta itemprop="description" content="
+1. 安装Carla-Autoware-Bridge
+
+预先安装的软件
+Carla-Autoware-Bridge安装过程
+运行Carla-Autoware-Bridge
+
+
+2. 源码安装ROS-Bridge
+
+预先安装的软件
+ROS-...">
 <meta itemprop="image" content="">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="《浪潮之巅》内容整理 | FlammingRaven">
-<meta name="twitter:description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节...">
+<meta name="twitter:title" content="Carla Autoware及Carla ROS安装过程 | FlammingRaven">
+<meta name="twitter:description" content="
+1. 安装Carla-Autoware-Bridge
+
+预先安装的软件
+Carla-Autoware-Bridge安装过程
+运行Carla-Autoware-Bridge
+
+
+2. 源码安装ROS-Bridge
+
+预先安装的软件
+ROS-...">
 <meta name="twitter:image" content="" />
-<meta name="twitter:image:alt" content="《浪潮之巅》内容整理 | FlammingRaven" />
+<meta name="twitter:image:alt" content="Carla Autoware及Carla ROS安装过程 | FlammingRaven" />
 
 
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/">
-<meta property="og:title" content="《浪潮之巅》内容整理 | FlammingRaven">
-<meta property="og:description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节...">
+<meta property="og:url" content="https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/">
+<meta property="og:title" content="Carla Autoware及Carla ROS安装过程 | FlammingRaven">
+<meta property="og:description" content="
+1. 安装Carla-Autoware-Bridge
+
+预先安装的软件
+Carla-Autoware-Bridge安装过程
+运行Carla-Autoware-Bridge
+
+
+2. 源码安装ROS-Bridge
+
+预先安装的软件
+ROS-...">
 <meta property="og:image" content="">
-<meta property="og:image:alt" content="《浪潮之巅》内容整理 | FlammingRaven" />
+<meta property="og:image:alt" content="Carla Autoware及Carla ROS安装过程 | FlammingRaven" />
 <meta property="og:site_name" content="FlammingRaven">
 <meta property="og:locale" content="zh_CN">
-<meta property="tag" content="《浪潮之巅》内容整理 | FlammingRaven" />
+<meta property="tag" content="Carla Autoware及Carla ROS安装过程 | FlammingRaven" />
 
 
 <script type="application/ld+json">
@@ -2238,11 +2278,11 @@
 "@type": "BlogPosting",
 "mainEntityOfPage": {
   "@type": "WebPage",
-  "@id": "https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/"
+  "@id": "https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/"
 },
-"headline": "《浪潮之巅》内容整理 | FlammingRaven",
-"datePublished": "Sun Jul 26 2020 16:16:43 GMT+0800",
-"dateModified": "Sun Jul 26 2020 16:16:43 GMT+0800",
+"headline": "Carla Autoware及Carla ROS安装过程 | FlammingRaven",
+"datePublished": "Sun Jul 26 2020 17:19:54 GMT+0800",
+"dateModified": "Sun Jul 26 2020 17:19:54 GMT+0800",
 "author": {
   "@type": "Person",
   "name": "Raven"
@@ -2258,8 +2298,18 @@
 "image": [
 ""
 ],
-"description": "本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节..."
+"description": "
+1. 安装Carla-Autoware-Bridge
+
+预先安装的软件
+Carla-Autoware-Bridge安装过程
+运行Carla-Autoware-Bridge
+
+
+2. 源码安装ROS-Bridge
+
+预先安装的软件
+ROS-..."
  }
 
 </script>
@@ -2275,8 +2325,8 @@
     },{
       "@type": "ListItem", 
       "position": 2, 
-      "name": "《浪潮之巅》内容整理 | FlammingRaven",
-      "item": "https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/"  
+      "name": "Carla Autoware及Carla ROS安装过程 | FlammingRaven",
+      "item": "https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/"  
     }]
   }
   </script>
@@ -2298,7 +2348,7 @@
 
 <script async custom-element="amp-gist" src="https://cdn.ampproject.org/v0/amp-gist-0.1.js"></script>
 
-<link rel="alternate" type="application/atom+xml" title="《浪潮之巅》内容整理 | FlammingRaven - Atom Feed" href="https://flammingRaven.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Carla Autoware及Carla ROS安装过程 | FlammingRaven - Atom Feed" href="https://flammingRaven.github.io/atom.xml">
 
 
 
@@ -2353,8 +2403,11 @@
 
       <div class="article-info">
         
+          <div class="flex-box meta-category">
+            <a class="post-cate" href="https://flammingRaven.github.io/tag/SLxO9nmXw/">智能车相关</a></div>
+          
         <h2 class="article-title">
-          <a href="https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/">《浪潮之巅》内容整理</a>
+          <a href="https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/">Carla Autoware及Carla ROS安装过程</a>
         </h2>
         <div class="flex-box">
           <div class="flex-box post-meta-box">
@@ -2368,108 +2421,172 @@
         </div>
       </div>
       <div class="content">
-        <h1 id="本文目的">本文目的：</h1>
-<p>在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节还没理解到位，所以目前还没有想好该以什么方式进行重新整理。（这里大框架的总结所用的逻辑顺序遵从“从具体到抽象”）</p>
-<p>就全书内容而言，个人认为全书可以分为两条主线，第一条是下文的关于具体公司的历史以及影响这些公司发展的因素的介绍（第一、第二部分）；第二条主线是关于人类社会科技革命历史的回顾，以及对这段发展历史的分析，并给出其背后蕴含的科学原理或方法论（第三部分）。</p>
-<p>注：总结过程中，一些涉及公司的概念或商业概念可能有些模糊，望指正！</p>
-<h1 id="一it行业相关的具体公司介绍">一，IT行业相关的具体公司介绍</h1>
-<p>(以下分类只是总结书中内容，并且公司都是书中涉及到的公司，不带任何主观色彩)</p>
-<h2 id="1-引领和紧跟时代浪潮的公司">1. 引领和紧跟时代浪潮的公司</h2>
+        <p><ul class="markdownIt-TOC">
+<li><a href="#1-%E5%AE%89%E8%A3%85carla-autoware-bridge">1. 安装Carla-Autoware-Bridge</a>
+<ul>
+<li><a href="#%E9%A2%84%E5%85%88%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6">预先安装的软件</a></li>
+<li><a href="#carla-autoware-bridge%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B">Carla-Autoware-Bridge安装过程</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8Ccarla-autoware-bridge">运行Carla-Autoware-Bridge</a></li>
+</ul>
+</li>
+<li><a href="#2-%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85ros-bridge">2. 源码安装ROS-Bridge</a>
+<ul>
+<li><a href="#%E9%A2%84%E5%85%88%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6-2">预先安装的软件</a></li>
+<li><a href="#ros-bridge%E7%9A%84%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B">ROS-Bridge的源码安装过程</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B">运行过程</a></li>
+</ul>
+</li>
+</ul>
+<br>
+本文总结了CARLA与autoware和ROS的联合仿真的安装过程和一些问题。主要参考了以下链接：</p>
 <ol>
-<li>“八叛徒”与仙童半导体（引领了半导体产业的发展）</li>
-<li>IBM（企业级计算机，到企业级服务的转型）</li>
-<li>微软（个人PC霸主）</li>
-<li>苹果（艺术与科技的结合）</li>
-<li>Google（其实是Alphabet, 互联网霸主）</li>
-<li>GE（经久不衰）</li>
-<li>Facebook（引领社交网络社交平台）</li>
-<li>思科（引领互联网通信设备）</li>
-<li>甲骨文（一开始只卖软件服务的创新）</li>
-<li>英特尔 （WinTel体系，引领过个人PC处理器芯片）</li>
+<li>Autoware-Carla Bridge的官方链接为：<a href="https://github.com/carla-simulator/carla-autoware">https://github.com/carla-simulator/carla-autoware</a></li>
+<li>Carla-ROS Bridge的官方链接为：<a href="https://github.com/carla-simulator/ros-bridge">https://github.com/carla-simulator/ros-bridge</a>和<a href="https://carla.readthedocs.io/en/latest/ros_installation/">https://carla.readthedocs.io/en/latest/ros_installation/</a></li>
 </ol>
-<h2 id="2-曾经引领时代浪潮但现今可能落后于浪潮的公司">2. 曾经引领时代浪潮但现今可能落后于浪潮的公司</h2>
+<h1 id="1-安装carla-autoware-bridge">1. 安装Carla-Autoware-Bridge</h1>
+<h2 id="预先安装的软件">预先安装的软件</h2>
 <ol>
-<li>AT&amp;T</li>
-<li>雅虎</li>
-<li>惠普</li>
-<li>诺基亚</li>
-<li>摩托罗拉</li>
+<li><strong>Carla 0.9.7</strong>（官方链接用的是0.9.6版本）<br>
+<strong>第一个疑问解决</strong>:官方的ROS-bridge其实是不支持0.9.6及以下的CARLA版本的，我安装之后看了下autoware-carla里面ros-bridge的<code>readme.md</code>文件，发现这里用的ROS-bridge其实是支持CARLA 0.9.4版本及其以上，所以<strong>autoware-carla已经包含了ros-bridge, 也就是不需要额外再安装ROS-bridge了。</strong></li>
+<li><strong>Autoware 1.12.0</strong> （安装详情可以见我的<a href="https://blog.csdn.net/qq_41871826/article/details/105276880">这篇博客</a>）</li>
 </ol>
-<h2 id="3-曾经引领时代浪潮但现今已被浪潮淘汰的公司淘汰指的是被收购或现在影响力不大">3. 曾经引领时代浪潮但现今已被浪潮“淘汰”的公司（淘汰指的是被收购或现在影响力不大）</h2>
+<h2 id="carla-autoware-bridge安装过程">Carla-Autoware-Bridge安装过程</h2>
+<p>其实Carla-Autoware-Bridge本质上算是一个ROS Package，整个包的大小大约在<code>1.6GB</code>左右。其安装过程按照官方链接中的指令做基本就可以。<strong>但是遇到的问题就是下载太慢，git clone中有子文件夹。</strong></p>
 <ol>
-<li>太阳（SUN）——已被甲骨文收购</li>
-<li>Novell公司——已被Attachmate收购</li>
-<li>网景——已被美国在线收购</li>
-<li>RealNetworks</li>
+<li>Ubuntu下安装<code>git lfs</code>（直接跟着<a href="https://github.com/git-lfs/git-lfs/wiki/Installation">官方链接</a>走就可以）</li>
 </ol>
-<h2 id="4-it产业之外的公司3m公司">4. IT产业之外的公司——3M公司</h2>
-<p>这里提及3M是因为该公司的管理制度有借鉴意义，员工有其自由时间。</p>
-<p>（**注：**以上的分类中第二点包含了一些一开始引领了时代，但之后转型出现问题的公司；第三点中的大部分公司已经被其他公司收购， 或者已经没有原来的生命力，甚至是破产）</p>
-<h1 id="二对公司发展造成影响的因素以下因素暂时没有逻辑顺序">二，对公司发展造成影响的因素：（以下因素暂时没有逻辑顺序）</h1>
-<h2 id="1-it行业信息产业以及公司发展的规律">1. IT行业/信息产业以及公司发展的规律</h2>
-<p>（前三点为信息产业本身存在的客观规律，第四点为信息产业的市场份额分配的规律，最后两点是大公司继续发展或转型时必须面对的客观规律）</p>
+<pre><code class="language-powershell">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+git lfs install
+</code></pre>
+<ol start="2">
+<li>下载Carla-Autoware-Bridge文件包</li>
+</ol>
+<pre><code class="language-powershell">cd ~
+git lfs clone https://github.com/carla-simulator/carla-autoware.git
+cd carla-autoware
+git submodule update --init
+</code></pre>
+<p><strong>疑问解决：</strong><br>
+<strong>这一步需要花费很多时间，请保持耐心</strong>。这里要用<code>git submodule update --init</code>是因为当用<code>git clone 网址</code>下载时，文件包中的子文件夹不会被下载。<code>git submodule update --init</code>的作用就是自动下载子文件夹。（后续ROS-Bridge也有相同的问题）</p>
+<p><strong>创建catkin工作空间、安装相关依赖并编译</strong></p>
+<pre><code class="language-powershell">#初始化工作空间
+cd catkin_ws
+source ~/autoware.ai/install/setup.bash
+catkin_init_workspace src/
+
+#安装依赖
+rosdep update
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+
+#编译工作空间
+catkin_make
+</code></pre>
+<p>其中<code>source ~/autoware.ai/install/setup.bash</code>的作用和在autoware的运行中一样，都是把autoware中的子节点加入到环境变量中。后续的<code>catkin_init_workspace src/</code>是常规的ROS中初始化工作空间的指令。</p>
+<p>如果<strong>rosdep update出现网络连接问题</strong>，可以参考我的<a href="https://blog.csdn.net/qq_41871826/article/details/105187570">这篇博客</a></p>
+<h2 id="运行carla-autoware-bridge">运行Carla-Autoware-Bridge</h2>
 <ol>
-<li>摩尔定律</li>
-<li>反摩尔定律</li>
-<li>安迪-比尔定律</li>
-<li>70-20-10定律</li>
-<li>诺威格定律</li>
-<li>基因决定定律</li>
+<li>启动Carla服务器</li>
 </ol>
-<h2 id="2-所处环境优势和地域文化这里的环境主要是指硅谷">2. 所处环境优势和地域文化（这里的环境主要是指硅谷）</h2>
+<pre><code class="language-powershell">cd &lt;path-to-Carla_0.9.7.4&gt;
+./CarlaUE4.sh -opengl
+</code></pre>
+<p>（最好把这些指令存到<code>~</code>目录下的shell脚本中，方便启动）<br>
+2. 启动Carla-Autoware-Bridge</p>
+<pre><code class="language-powershell">export CARLA_AUTOWARE_ROOT=~/carla-autoware/autoware_launch
+export CARLA_MAPS_PATH=~/carla-autoware/autoware_data/maps
+source $CARLA_AUTOWARE_ROOT/../catkin_ws/devel/setup.bash
+export PYTHONPATH=$PYTHONPATH:~/CARLA_0.9.7.4/PythonAPI/carla/dist/carla-0.9.7-py2.7-linux-x86_64.egg
+roslaunch $CARLA_AUTOWARE_ROOT/devel.launch
+</code></pre>
+<p>这里的<code>export CARLA_MAPS_PATH=~/carla-autoware/autoware_data/maps</code>的作用是把相关的pcd点云文件加入到环境变量中，不添加的会可能rivz中不显示激光雷达地图。如果不添加<code>carla-0.9.7-py2.7-linux-x86_64.egg</code>到环境变量中会出现导入carla库失败<strong>ImportError: no module named CARLA</strong>的情况。</p>
+<p>以下代码用来检查carla环境变量是否配置成功：</p>
+<pre><code class="language-powershell">python -c 'import carla;print(&quot;Success&quot;)'
+</code></pre>
+<p>输入以上指令之后会出现一个pygame的窗口显示运行结果，等上一段时间车辆会开始缓慢行驶。也可以手动控制车辆，<mark><strong>按下B键即可切换。</strong></mark><strong>（如果车辆没有自动行驶，说明<code>devel.launch</code>启动中出现错误，建议根据终端显示的报错信息进行调试。）</strong></p>
+<p>这里<strong>我遇到的坑</strong>是<strong>缺少几个python模块</strong>：分别是<code>networkx</code>和<code>simple_pid</code></p>
+<p>出现的报错如下：</p>
+<pre><code class="language-cpp">  File &quot;/home/guo/carla-autoware/catkin_ws/src/ros-bridge/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py&quot;, line 30, in &lt;module&gt;
+    from agents.navigation.global_route_planner import GlobalRoutePlanner
+  File &quot;/home/guo/CARLA_0.9.7.4/PythonAPI/carla/agents/navigation/global_route_planner.py&quot;, line 11, in &lt;module&gt;
+    import networkx as nx
+ImportError: No module named networkx
+[carla_waypoint_publisher-7] process has died [pid 11565, exit code 1, cmd /home/guo/carla-autoware/catkin_ws/src/ros-bridge/carla_waypoint_publisher/src/carla_waypoint_publisher/carla_waypoint_publisher.py __name:=carla_waypoint_publisher __log:=/home/guo/.ros/log/3f7c326a-a0b1-11ea-abbb-e0d55ea64ade/carla_waypoint_publisher-7.log].
+log file: /home/guo/.ros/log/3f7c326a-a0b1-11ea-abbb-e0d55ea64ade/carla_waypoint_publisher-7*.log
+</code></pre>
+<p>用以下指令安装确实的包：</p>
+<pre><code class="language-powershell">pip install networkx
+pip install simple_pid
+</code></pre>
+<p>安装simple_pid后建议检测一下终端是否会出现警告，如下</p>
+<pre><code class="language-powershell">python
+from simple_pid import PID
+</code></pre>
+<p>出现以下情况<code>&lt;path-to-user&gt;/.local/lib/python2.7/site-packages/simple_pid/PID.py:22UserWarning: time.monotonic() not available in python &lt; 3.3, using time.time() as fallback warnings.warn('time.monotonic() not available in python &lt; 3.3, using time.time() as fallback')</code>之后打开目录对应的文件，将<code>time.monotonic</code>改为<code>time.time</code>即可</p>
+<ol start="3">
+<li>启动Rviz<br>
+ROS中的RVIZ能够帮助可视化carla城市中的激光点图。<strong>（这里不需要用autoware中的rviz）</strong></li>
+</ol>
+<pre><code class="language-powershell">rosrun rviz rviz
+</code></pre>
+<p>当然，也可以通过autoware的<code>runtime manager</code>打开rviz显示。</p>
+<p>启动之后效果图如下：（Carla-Autoware-Bridge中已经包含各个城市的激光点云数据）<br>
+<img src="https://img-blog.csdnimg.cn/20200520230541429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200521150955775.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+动图如下：<br>
+<img src="https://img-blog.csdnimg.cn/20200528161324687.gif" alt="在这里插入图片描述" loading="lazy"></p>
+<h1 id="2-源码安装ros-bridge">2. 源码安装ROS-Bridge</h1>
+<p><strong>踩坑</strong>：第一次安装尝试了apt安装Carla-ROS-Bridge，运行时报错。为节省时间，我直接按照官网要求进行源码安装（开发者），我觉得apt安装和源码安装bridge出现报错的原因是一样的，因为用源码安装，在<code>git clone</code>过程中文件夹<code>ros-bridge</code>中的<code>carla_msgs</code>为空，对应ros-bridge的<a href="https://github.com/carla-simulator/ros-bridge">github网址</a>中高亮的文件：<br>
+<img src="https://img-blog.csdnimg.cn/20200515220540326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy">下载的工程带有submodule，可以用<code>git submodule update --init</code>进行子文件夹下载。（我是直接从github下载的，没有用该指令，不能保证其有效性。）</p>
+<h2 id="预先安装的软件-2">预先安装的软件</h2>
 <ol>
-<li>斯坦福大学对硅谷的影响（即硅谷所处的环境优势）</li>
-<li>硅谷独有的精神和特点（重点就是创新和叛逆精神）</li>
+<li>ROS Kinetic</li>
+<li>Carla 0.9.7.4</li>
 </ol>
-<h2 id="3-资本的影响it公司发展的幕后推手">3. 资本的影响（IT公司发展的幕后推手）</h2>
+<h2 id="ros-bridge的源码安装过程">ROS-Bridge的源码安装过程</h2>
+<p>这里的源码安装过程就直接搬运官网指令了，基本不会出现什么问题。</p>
+<pre><code class="language-powershell">mkdir -p ~/carla-ros-bridge/catkin_ws/src
+cd ~/carla-ros-bridge
+git clone https://github.com/carla-simulator/ros-bridge.git
+cd catkin_ws/src
+ln -s ../../ros-bridge
+source /opt/ros/kinetic/setup.bash #Watch out, this sets ROS Kinetic. 
+cd ..
+
+#install required ros-dependencies
+rosdep update
+rosdep install --from-paths src --ignore-src -r
+
+#build
+catkin_make
+</code></pre>
+<h2 id="运行过程">运行过程</h2>
 <ol>
-<li>风险投资（对公司创业期或上市前造成影响）</li>
-<li>投资银行（对公司上市后造成影响）</li>
-<li>金融风暴带来的影响（以上两点是具体金融机构或持有资本的个人对公司的影响，第三点是金融大环境对公司发展造成的影响）</li>
+<li>配置相关环境变量（最好只对当前终端使用）</li>
 </ol>
-<h2 id="4-商业模式的选择几个成功的商业模式">4. 商业模式的选择（几个成功的商业模式）</h2>
-<ol>
-<li>Google的广告系统</li>
-<li>eBay和亚马逊的电商平台使用的商业模式</li>
-<li>戴尔的直销策略（虚拟工厂）</li>
-<li>腾讯的浮存资金</li>
+<pre><code class="language-powershell">source ~/carla-ros-bridge/catkin_ws/devel/setup.bash
+</code></pre>
+<ol start="2">
+<li>启动carla 0.9.7.4</li>
 </ol>
-<h2 id="5-公司管理与企业文化前三点是关于公司的制度或管理最后一点涉及公司的企业文化">5. 公司管理与企业文化（前三点是关于公司的制度或管理，最后一点涉及公司的企业文化）</h2>
-<ol>
-<li>股权与期权（劳资关系 或者是生产关系）</li>
-<li>扁平管理</li>
-<li>采用轻资产</li>
-<li>工程师文化（企业文化）</li>
-</ol>
-<h1 id="三回顾分析信息产业的发展历史并展望未来">三，回顾+分析信息产业的发展历史并展望未来</h1>
-<h2 id="1-人类历史上的几次科技革命的回顾与展望">1. 人类历史上的几次科技革命的回顾与展望</h2>
-<ol>
-<li>第一次工业革命（动力的革命）</li>
-<li>第二次工业革命（“电”的革命）</li>
-<li>第三次工业革命（信息革命）</li>
-<li>如今的智能革命</li>
-<li>处于不同时代下创新的范式（现有产业+新技术=新的产业）</li>
-</ol>
-<h2 id="2-互联网历史的回顾从互联网10-20到移动互联网时代-再到如今的云计算">2. 互联网历史的回顾（从互联网1.0、2.0到移动互联网时代、再到如今的云计算）</h2>
-<ol>
-<li>分析历史后得到历史背后的理论基础和思维模式<br>
-理论基础的转变是从机械论到“三论”，即控制论、信息论、系统论；<br>
-信息时代与前几次工业革命思维模式的不同之处；</li>
-<li>展望未来：下一次科技革命（或者是国际化大公司出现）可能出现的领域</li>
-</ol>
+<pre><code class="language-powershell">**# Option 1: start the ros bridge
+roslaunch carla_ros_bridge carla_ros_bridge.launch
+
+# Option 2: start the ros bridge together with RVIZ
+roslaunch carla_ros_bridge carla_ros_bridge_with_rviz.launch
+
+# Option 3: start the ros bridge together with an example ego vehicle
+roslaunch carla_ros_bridge carla_ros_bridge_with_example_ego_vehicle.launch**
+</code></pre>
 
       </div>
 
       
       <nav class="post-nav">
         
-        <div class="nav-previous">
-          <a class="post-nav-link-active" title="强化学习笔记（1）——一些基本概念" href="https://flammingRaven.github.io/post/qiang-hua-xue-xi-bi-ji-1-yi-xie-ji-ben-gai-nian/">上一篇文章</a>
-        </div>
-        
         
         <div class="nav-next">
-          <a class="post-nav-link-active" title="【论文研读】路径规划中的Hybrid A*算法" href="https://flammingRaven.github.io/post/lun-wen-yan-du-lu-jing-gui-hua-zhong-de-hybrid-asuan-fa/">下一篇文章</a>
+          <a class="post-nav-link-active" title="Autoware 1.12.0 源码安装总结" href="https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/">下一篇文章</a>
           
 
         </div>
@@ -2508,6 +2625,8 @@
       
 
       <div class="post-tags">
+        
+        <a href="https://flammingRaven.github.io/tag/SLxO9nmXw/" rel="tag">智能车相关</a>        
                
       </div>
 

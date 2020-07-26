@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节..." />
+<meta name="description" content="Autoware 1.12.0 源码安装总结
+终于是跑通了autoware的demo，源码安装的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去官网一步步安装，能少走..." />
 <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
 <link rel="preconnect dns-prefetch" href="https://cdn.jsdelivr.net/" crossorigin>
 <script async src="https://cdn.ampproject.org/v0.js"></script>
-<title>《浪潮之巅》内容整理 | FlammingRaven</title>
+<title>Autoware 1.12.0 源码安装总结 | FlammingRaven</title>
 
 
   
@@ -2202,34 +2202,34 @@
 
 <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
 <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-<link rel="canonical" href="https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/" />
+<link rel="canonical" href="https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/" />
 <link rel="shortcut icon" href="https://flammingRaven.github.io/favicon.ico?v=1595755223676">
 
 <meta name="author" content="Raven">
 
-<meta itemprop="name" content="《浪潮之巅》内容整理 | FlammingRaven">
-<meta itemprop="description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节...">
+<meta itemprop="name" content="Autoware 1.12.0 源码安装总结 | FlammingRaven">
+<meta itemprop="description" content="Autoware 1.12.0 源码安装总结
+终于是跑通了autoware的demo，源码安装的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去官网一步步安装，能少走...">
 <meta itemprop="image" content="">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="《浪潮之巅》内容整理 | FlammingRaven">
-<meta name="twitter:description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节...">
+<meta name="twitter:title" content="Autoware 1.12.0 源码安装总结 | FlammingRaven">
+<meta name="twitter:description" content="Autoware 1.12.0 源码安装总结
+终于是跑通了autoware的demo，源码安装的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去官网一步步安装，能少走...">
 <meta name="twitter:image" content="" />
-<meta name="twitter:image:alt" content="《浪潮之巅》内容整理 | FlammingRaven" />
+<meta name="twitter:image:alt" content="Autoware 1.12.0 源码安装总结 | FlammingRaven" />
 
 
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/">
-<meta property="og:title" content="《浪潮之巅》内容整理 | FlammingRaven">
-<meta property="og:description" content="本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节...">
+<meta property="og:url" content="https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/">
+<meta property="og:title" content="Autoware 1.12.0 源码安装总结 | FlammingRaven">
+<meta property="og:description" content="Autoware 1.12.0 源码安装总结
+终于是跑通了autoware的demo，源码安装的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去官网一步步安装，能少走...">
 <meta property="og:image" content="">
-<meta property="og:image:alt" content="《浪潮之巅》内容整理 | FlammingRaven" />
+<meta property="og:image:alt" content="Autoware 1.12.0 源码安装总结 | FlammingRaven" />
 <meta property="og:site_name" content="FlammingRaven">
 <meta property="og:locale" content="zh_CN">
-<meta property="tag" content="《浪潮之巅》内容整理 | FlammingRaven" />
+<meta property="tag" content="Autoware 1.12.0 源码安装总结 | FlammingRaven" />
 
 
 <script type="application/ld+json">
@@ -2238,11 +2238,11 @@
 "@type": "BlogPosting",
 "mainEntityOfPage": {
   "@type": "WebPage",
-  "@id": "https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/"
+  "@id": "https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/"
 },
-"headline": "《浪潮之巅》内容整理 | FlammingRaven",
-"datePublished": "Sun Jul 26 2020 16:16:43 GMT+0800",
-"dateModified": "Sun Jul 26 2020 16:16:43 GMT+0800",
+"headline": "Autoware 1.12.0 源码安装总结 | FlammingRaven",
+"datePublished": "Sun Jul 26 2020 17:19:18 GMT+0800",
+"dateModified": "Sun Jul 26 2020 17:19:18 GMT+0800",
 "author": {
   "@type": "Person",
   "name": "Raven"
@@ -2258,8 +2258,8 @@
 "image": [
 ""
 ],
-"description": "本文目的：
-在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节..."
+"description": "Autoware 1.12.0 源码安装总结
+终于是跑通了autoware的demo，源码安装的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去官网一步步安装，能少走..."
  }
 
 </script>
@@ -2275,8 +2275,8 @@
     },{
       "@type": "ListItem", 
       "position": 2, 
-      "name": "《浪潮之巅》内容整理 | FlammingRaven",
-      "item": "https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/"  
+      "name": "Autoware 1.12.0 源码安装总结 | FlammingRaven",
+      "item": "https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/"  
     }]
   }
   </script>
@@ -2298,7 +2298,7 @@
 
 <script async custom-element="amp-gist" src="https://cdn.ampproject.org/v0/amp-gist-0.1.js"></script>
 
-<link rel="alternate" type="application/atom+xml" title="《浪潮之巅》内容整理 | FlammingRaven - Atom Feed" href="https://flammingRaven.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Autoware 1.12.0 源码安装总结 | FlammingRaven - Atom Feed" href="https://flammingRaven.github.io/atom.xml">
 
 
 
@@ -2353,8 +2353,11 @@
 
       <div class="article-info">
         
+          <div class="flex-box meta-category">
+            <a class="post-cate" href="https://flammingRaven.github.io/tag/SLxO9nmXw/">智能车相关</a></div>
+          
         <h2 class="article-title">
-          <a href="https://flammingRaven.github.io/post/lesslesslang-chao-zhi-dian-greatergreater-nei-rong-zheng-li/">《浪潮之巅》内容整理</a>
+          <a href="https://flammingRaven.github.io/post/autoware-1120-yuan-ma-an-zhuang-zong-jie/">Autoware 1.12.0 源码安装总结</a>
         </h2>
         <div class="flex-box">
           <div class="flex-box post-meta-box">
@@ -2368,95 +2371,88 @@
         </div>
       </div>
       <div class="content">
-        <h1 id="本文目的">本文目的：</h1>
-<p>在读完吴军老师所著书籍《浪潮之巅》之后，重新将其内容结构按照自己理解的方式重新整理（豆瓣评分还是很准的）。本文目前只是全书整个框架的梳理，具体每个部分的细节之后再慢慢更新吧。因为每一部分涉及的内容太多，自己对于书中有些部分的细节还没理解到位，所以目前还没有想好该以什么方式进行重新整理。（这里大框架的总结所用的逻辑顺序遵从“从具体到抽象”）</p>
-<p>就全书内容而言，个人认为全书可以分为两条主线，第一条是下文的关于具体公司的历史以及影响这些公司发展的因素的介绍（第一、第二部分）；第二条主线是关于人类社会科技革命历史的回顾，以及对这段发展历史的分析，并给出其背后蕴含的科学原理或方法论（第三部分）。</p>
-<p>注：总结过程中，一些涉及公司的概念或商业概念可能有些模糊，望指正！</p>
-<h1 id="一it行业相关的具体公司介绍">一，IT行业相关的具体公司介绍</h1>
-<p>(以下分类只是总结书中内容，并且公司都是书中涉及到的公司，不带任何主观色彩)</p>
-<h2 id="1-引领和紧跟时代浪潮的公司">1. 引领和紧跟时代浪潮的公司</h2>
+        <h1 id="autoware-1120-源码安装总结">Autoware 1.12.0 源码安装总结</h1>
+<p>终于是跑通了autoware的demo，<strong>源码安装</strong>的过程中踩了挺多坑的，本文总结一下安装过程并记录遇到的问题。安装autoware之前最好大概搜索一下其他人的安装过程然后再去<a href="https://gitlab.com/autowarefoundation/autoware.ai/autoware/-/wikis/Source-Build">官网</a>一步步安装，能少走很多弯路。<br>
+(autoware的整个资源已经迁移到gitlab了，之前github主页也会提醒转到gitlab网站)</p>
+<h2 id="一-配置及需要预先安装的软件">一、配置及需要预先安装的软件</h2>
+<p>autoware需要提前安装的东西挺多的，最好<strong>确保这些都安装正确</strong>再继续。</p>
 <ol>
-<li>“八叛徒”与仙童半导体（引领了半导体产业的发展）</li>
-<li>IBM（企业级计算机，到企业级服务的转型）</li>
-<li>微软（个人PC霸主）</li>
-<li>苹果（艺术与科技的结合）</li>
-<li>Google（其实是Alphabet, 互联网霸主）</li>
-<li>GE（经久不衰）</li>
-<li>Facebook（引领社交网络社交平台）</li>
-<li>思科（引领互联网通信设备）</li>
-<li>甲骨文（一开始只卖软件服务的创新）</li>
-<li>英特尔 （WinTel体系，引领过个人PC处理器芯片）</li>
+<li><strong>Ubuntu 16.04 LTS</strong>，安装过程可参考我的这篇博客：<a href="https://blog.csdn.net/qq_41871826/article/details/104702737">Ubuntu 16.04安装过程中的一些总结</a><br>
+<strong>注意第一个坑！</strong> 安装完ubuntu系统之后最好不要去安装anaconda，因为装完anaconda会把原始Ubuntu自带的python 2.7替换为Python3（ROS很多包都会用到python 2.7）我第一次试着装autoware的时候就装了anaconda，重新创建了一个python 2.7的conda环境之后在跑autoware demo的时候出现了打不开autoware的运行时系统的问题，所以为了节省精力，还是不要装anaconda的好。</li>
+<li><strong>ROS kinetic</strong>，安装过程可以参考我的这篇博客：<a href="https://blog.csdn.net/qq_41871826/article/details/105187570">ubuntu 16.04 ROS Kinetic安装</a><br>
+安装ROS相对容易许多，除了这篇文章中提到的换国内源之后出现的<strong>GPG ERROR</strong>问题，整体安装下来比较顺利。<br>
+(<strong>ROS Kinetic本身就自带了OpenCV</strong> 3.3.1，也可以装完ROS之后可以用<code>import cv2</code>和<code>cv2.__version__</code>查看版本)</li>
+<li><strong>QT 5.2.1及以上</strong>，这里我装的是<a href="https://www.qt.io/offline-installers">QT 5.9.9</a>（去官网下载即可），至于QT-ROS的插件安装过程我后续加到这来</li>
+<li><strong>CUDA 9.0</strong>，autoware要求CUDA的版本是9.0，所以还是严格按照官网要求来做，我怕出现问题就没装其他版本。装CUDA前先看看显卡驱动是不是和你的内核要求的驱动版本一致，不一致会出现：Failed to initialize NVML: Driver/library version mismatch，下文有解决该问题的博客链接。<br>
+参考链接：
+<ul>
+<li><a href="https://developer.nvidia.com/cuda-90-download-archive">CUDA下载地址</a></li>
+<li><a href="https://www.jianshu.com/p/6b0e2c617591">CUDA 9.0下载与安装</a><br>
+（这一步中修改环境变量之后一定要用<code>source ~/.bashrc</code>更新，最后用<code>nvcc -V</code>检查cuda版本）</li>
+<li><a href="https://blog.csdn.net/qq_40200387/article/details/90341107">解决Failed to initialize NVML: Driver/library version mismatch</a></li>
+</ul>
+</li>
 </ol>
-<h2 id="2-曾经引领时代浪潮但现今可能落后于浪潮的公司">2. 曾经引领时代浪潮但现今可能落后于浪潮的公司</h2>
-<ol>
-<li>AT&amp;T</li>
-<li>雅虎</li>
-<li>惠普</li>
-<li>诺基亚</li>
-<li>摩托罗拉</li>
-</ol>
-<h2 id="3-曾经引领时代浪潮但现今已被浪潮淘汰的公司淘汰指的是被收购或现在影响力不大">3. 曾经引领时代浪潮但现今已被浪潮“淘汰”的公司（淘汰指的是被收购或现在影响力不大）</h2>
-<ol>
-<li>太阳（SUN）——已被甲骨文收购</li>
-<li>Novell公司——已被Attachmate收购</li>
-<li>网景——已被美国在线收购</li>
-<li>RealNetworks</li>
-</ol>
-<h2 id="4-it产业之外的公司3m公司">4. IT产业之外的公司——3M公司</h2>
-<p>这里提及3M是因为该公司的管理制度有借鉴意义，员工有其自由时间。</p>
-<p>（**注：**以上的分类中第二点包含了一些一开始引领了时代，但之后转型出现问题的公司；第三点中的大部分公司已经被其他公司收购， 或者已经没有原来的生命力，甚至是破产）</p>
-<h1 id="二对公司发展造成影响的因素以下因素暂时没有逻辑顺序">二，对公司发展造成影响的因素：（以下因素暂时没有逻辑顺序）</h1>
-<h2 id="1-it行业信息产业以及公司发展的规律">1. IT行业/信息产业以及公司发展的规律</h2>
-<p>（前三点为信息产业本身存在的客观规律，第四点为信息产业的市场份额分配的规律，最后两点是大公司继续发展或转型时必须面对的客观规律）</p>
-<ol>
-<li>摩尔定律</li>
-<li>反摩尔定律</li>
-<li>安迪-比尔定律</li>
-<li>70-20-10定律</li>
-<li>诺威格定律</li>
-<li>基因决定定律</li>
-</ol>
-<h2 id="2-所处环境优势和地域文化这里的环境主要是指硅谷">2. 所处环境优势和地域文化（这里的环境主要是指硅谷）</h2>
-<ol>
-<li>斯坦福大学对硅谷的影响（即硅谷所处的环境优势）</li>
-<li>硅谷独有的精神和特点（重点就是创新和叛逆精神）</li>
-</ol>
-<h2 id="3-资本的影响it公司发展的幕后推手">3. 资本的影响（IT公司发展的幕后推手）</h2>
-<ol>
-<li>风险投资（对公司创业期或上市前造成影响）</li>
-<li>投资银行（对公司上市后造成影响）</li>
-<li>金融风暴带来的影响（以上两点是具体金融机构或持有资本的个人对公司的影响，第三点是金融大环境对公司发展造成的影响）</li>
-</ol>
-<h2 id="4-商业模式的选择几个成功的商业模式">4. 商业模式的选择（几个成功的商业模式）</h2>
-<ol>
-<li>Google的广告系统</li>
-<li>eBay和亚马逊的电商平台使用的商业模式</li>
-<li>戴尔的直销策略（虚拟工厂）</li>
-<li>腾讯的浮存资金</li>
-</ol>
-<h2 id="5-公司管理与企业文化前三点是关于公司的制度或管理最后一点涉及公司的企业文化">5. 公司管理与企业文化（前三点是关于公司的制度或管理，最后一点涉及公司的企业文化）</h2>
-<ol>
-<li>股权与期权（劳资关系 或者是生产关系）</li>
-<li>扁平管理</li>
-<li>采用轻资产</li>
-<li>工程师文化（企业文化）</li>
-</ol>
-<h1 id="三回顾分析信息产业的发展历史并展望未来">三，回顾+分析信息产业的发展历史并展望未来</h1>
-<h2 id="1-人类历史上的几次科技革命的回顾与展望">1. 人类历史上的几次科技革命的回顾与展望</h2>
-<ol>
-<li>第一次工业革命（动力的革命）</li>
-<li>第二次工业革命（“电”的革命）</li>
-<li>第三次工业革命（信息革命）</li>
-<li>如今的智能革命</li>
-<li>处于不同时代下创新的范式（现有产业+新技术=新的产业）</li>
-</ol>
-<h2 id="2-互联网历史的回顾从互联网10-20到移动互联网时代-再到如今的云计算">2. 互联网历史的回顾（从互联网1.0、2.0到移动互联网时代、再到如今的云计算）</h2>
-<ol>
-<li>分析历史后得到历史背后的理论基础和思维模式<br>
-理论基础的转变是从机械论到“三论”，即控制论、信息论、系统论；<br>
-信息时代与前几次工业革命思维模式的不同之处；</li>
-<li>展望未来：下一次科技革命（或者是国际化大公司出现）可能出现的领域</li>
-</ol>
+<h2 id="2-autoware安装">2. Autoware安装</h2>
+<p>确保以上的软件都正确安装之后就可以按照官网的步骤安装了。我这里就直接拷贝指令过来吧，省得如果要再装的话去官网找了。<br>
+<strong>I. 安装相关依赖</strong></p>
+<pre><code class="language-powershell">sudo apt-get update 
+sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin gksu
+sudo apt-get install -y python3-pip python3-colcon-common-extensions python3-setuptools python3-vcstool
+pip3 install -U setuptools
+
+</code></pre>
+<p><strong>II. Build</strong></p>
+<p>创建工作空间</p>
+<pre><code class="language-powershell">mkdir -p autoware.ai/src
+cd autoware.ai
+</code></pre>
+<p>下载autoware.ai到工作空间</p>
+<pre><code class="language-powershell">wget -O autoware.ai.repos &quot;https://gitlab.com/autowarefoundation/autoware.ai/autoware/raw/1.12.0/autoware.ai.repos?inline=false&quot;
+vcs import src &lt; autoware.ai.repos
+</code></pre>
+<p>用rosdep安装依赖</p>
+<pre><code class="language-powershell">rosdep update
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+</code></pre>
+<p>编译工作空间（这里是with CUDA support）</p>
+<pre><code class="language-powershell">AUTOWARE_COMPILE_WITH_CUDA=1 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+</code></pre>
+<p><strong>踩坑：动态库链接libEGL.so损坏</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200515221536665.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+为了解决上述问题，我参考了<a href="https://blog.csdn.net/fb_941219/article/details/83549720">这篇博客</a>，根据报错情况，这里损坏的链接是<code>libEGL.so</code>。先看该文件是否存在，我是有这个文件的，但是打开文件的<code>properties</code>之后会发现链接已损坏，如下：<br>
+<img src="https://img-blog.csdnimg.cn/20200515221927669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>所以先删除该文件，再重新添加链接。</strong></p>
+<pre><code class="language-powershell">sudo rm /usr/lib/x86_64-linux-gnu/libEGL.so
+sudo ln /usr/lib/x86_64-linux-gnu/libEGL.so.1   /usr/lib/x86_64-linux-gnu/libEGL.so
+
+</code></pre>
+<p>出现下图就说明安装好了，有的包出现警告应该不影响。还有一点就是DNN相关的包不会自动安装。<br>
+<img src="https://img-blog.csdnimg.cn/20200402201703724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="3-运行autoware-rosbag-demo">3. 运行Autoware ROSBAG Demo</h2>
+<p>运行demo之前需要按照官网的要求下载两个数据包。建议直接从谷歌云盘下载。并且注意一下两个数据包的大小，<code>sample_moriyama_data.tar.gz</code>大小约为133MB，<code>sample_moriyama_150324.tar.gz</code>比较大，有3GB左右。<br>
+<a href="https://gitlab.com/autowarefoundation/autoware.ai/autoware/-/wikis/ROSBAG-Demo">官方demo网址</a></p>
+<p>下载之后过程就比较简单了，搬运的指令如下：</p>
+<p>第一步，解压文件</p>
+<pre><code class="language-powershell">cd ~
+mkdir .autoware
+cd .autoware
+cp ~/Downloads/sample_moriyama_* .
+tar zxfv sample_moriyama_150324.tar.gz
+tar zxfv sample_moriyama_data.tar.gz
+</code></pre>
+<p>（这里面要严格按照官网要求创建<code>.autoware</code>文件夹，我在CSDN上看到了有的博主提到了这个问题，<a href="https://blog.csdn.net/yourgreatfather/article/details/86504547">文章参考</a>）<br>
+第二步，运行</p>
+<pre><code class="language-powershell">cd autoware.ai
+source install/setup.bash
+roslaunch runtime_manager runtime_manager.launch
+</code></pre>
+<p>（这里会打开两个窗口）</p>
+<p>第三步，设置simulation的<code>.bag</code>文件，play之后直接pause<br>
+第四步，打开Rviz，设置配置文件（<code>File--&gt;Open Config</code>）<code>autoware.ai/src/autoware/documentation/autoware_quickstart_examples/launch/rosbag_demo/default.rviz</code></p>
+<p>第五步，打开quick start界面，添加相关例子的路径：<code>autoware.ai/src/autoware/documentation/autoware_quickstart_examples/launch/rosbag_demo/.</code><br>
+第六步，开始运行simulation：<br>
+<img src="https://img-blog.csdnimg.cn/20200402203502869.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODcxODI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 
       </div>
 
@@ -2464,12 +2460,12 @@
       <nav class="post-nav">
         
         <div class="nav-previous">
-          <a class="post-nav-link-active" title="强化学习笔记（1）——一些基本概念" href="https://flammingRaven.github.io/post/qiang-hua-xue-xi-bi-ji-1-yi-xie-ji-ben-gai-nian/">上一篇文章</a>
+          <a class="post-nav-link-active" title="Carla Autoware及Carla ROS安装过程" href="https://flammingRaven.github.io/post/carla-autoware-ji-carla-ros-an-zhuang-guo-cheng/">上一篇文章</a>
         </div>
         
         
         <div class="nav-next">
-          <a class="post-nav-link-active" title="【论文研读】路径规划中的Hybrid A*算法" href="https://flammingRaven.github.io/post/lun-wen-yan-du-lu-jing-gui-hua-zhong-de-hybrid-asuan-fa/">下一篇文章</a>
+          <a class="post-nav-link-active" title="强化学习笔记（1）——一些基本概念" href="https://flammingRaven.github.io/post/qiang-hua-xue-xi-bi-ji-1-yi-xie-ji-ben-gai-nian/">下一篇文章</a>
           
 
         </div>
@@ -2508,6 +2504,8 @@
       
 
       <div class="post-tags">
+        
+        <a href="https://flammingRaven.github.io/tag/SLxO9nmXw/" rel="tag">智能车相关</a>        
                
       </div>
 
